@@ -1,6 +1,6 @@
 /**
- * Cineby.sc Content Detector and Enhancer
- * This module detects and enhances specific elements on Cineby.sc
+ * hydrahd.ru Content Detector and Enhancer
+ * This module detects and enhances specific elements on hydrahd.ru
  */
 
 /**
@@ -37,8 +37,8 @@ function enhanceContentItems() {
     // Add data attribute for easier selection
     item.setAttribute('data-tflix-item', index);
     
-    // Special handling for cineby.sc
-    if (window.location.hostname.includes('cineby.sc')) {
+    // Special handling for hydrahd.ru
+    if (window.location.hostname.includes('hydrahd.ru')) {
       const anchor = item.tagName === 'A' ? item : item.querySelector('a');
       if (anchor && anchor.href && anchor.href.includes('/movie/')) {
         // Add a special click handler for Cineby movie links
@@ -85,8 +85,8 @@ function enhanceContentItems() {
     });
   });
   
-  // For cineby.sc, detect and enhance play buttons specifically
-  if (window.location.hostname.includes('cineby.sc')) {
+  // For hydrahd.ru, detect and enhance play buttons specifically
+  if (window.location.hostname.includes('hydrahd.ru')) {
     enhanceCinebyPlayButtons();
   }
 }
@@ -246,8 +246,8 @@ function addSearchNavigationHandler() {
     }
   });
   
-  // If the site is cineby.sc, specifically look for the search link
-  if (window.location.hostname.includes('cineby.sc')) {
+  // If the site is hydrahd.ru, specifically look for the search link
+  if (window.location.hostname.includes('hydrahd.ru')) {
     // Make search more accessible without requiring keyboard shortcuts
     const searchLinks = document.querySelectorAll('a[href*="search"]');
     searchLinks.forEach(link => {
@@ -295,9 +295,9 @@ function activateSearch(element) {
     return;
   }
   
-  // For cineby.sc specifically, navigate to the search page
-  if (window.location.hostname.includes('cineby.sc')) {
-    window.location.href = 'https://www.cineby.sc/search';
+  // For hydrahd.ru specifically, navigate to the search page
+  if (window.location.hostname.includes('hydrahd.ru')) {
+    window.location.href = 'https://www.hydrahd.ru/search';
     return;
   }
 }
@@ -326,7 +326,7 @@ function showSearchToast() {
 }
 
 /**
- * Enhance video player with better controls specifically for cineby.sc
+ * Enhance video player with better controls specifically for hydrahd.ru
  */
 function enhanceCinebyVideoPlayer() {
   // Only run on movie pages
@@ -359,7 +359,7 @@ function enhanceCinebyVideoPlayer() {
 }
 
 /**
- * Setup video player controls for cineby.sc
+ * Setup video player controls for hydrahd.ru
  * @param {HTMLElement} video - The video element
  */
 function setupVideoPlayerControls(video) {
@@ -503,7 +503,7 @@ function showVideoInfoToast(message) {
 }
 
 /**
- * Enhance play buttons specifically for cineby.sc
+ * Enhance play buttons specifically for hydrahd.ru
  */
 function enhanceCinebyPlayButtons() {
   // Only run on movie info pages
@@ -593,7 +593,7 @@ function enhanceCinebyPlayButtons() {
 }
 
 /**
- * Set up a video monitor specifically for cineby.sc
+ * Set up a video monitor specifically for hydrahd.ru
  * to ensure video plays correctly after clicking play
  */
 function setupCinebyVideoMonitor() {
@@ -680,8 +680,8 @@ function detectAndEnhanceContent() {
   enhanceSearchFunctionality();
   enhanceCinebyVideoPlayer();
   
-  // Special handling for cineby.sc on movie info pages
-  if (window.location.hostname.includes('cineby.sc') && 
+  // Special handling for hydrahd.ru on movie info pages
+  if (window.location.hostname.includes('hydrahd.ru') && 
       window.location.pathname.includes('/movie/')) {
     enhanceCinebyPlayButtons();
   }

@@ -123,8 +123,8 @@ function setupMediaControlListeners() {
 function handleBackButton(e) {
   e.preventDefault(); // Prevent default back behavior
   
-  // Special handling for cineby.sc
-  if (window.location.hostname.includes('cineby.sc')) {
+  // Special handling for hydrahd.ru
+  if (window.location.hostname.includes('hydrahd.ru')) {
     // Check if we're in a video player mode
     if (videoElement && videoElement.parentElement && 
         (document.fullscreenElement || 
@@ -325,8 +325,8 @@ function fixVideoPlaybackIssues(video) {
     video.setAttribute('preload', 'auto');
   }
   
-  // Special handling for cineby.sc
-  if (window.location.hostname.includes('cineby.sc')) {
+  // Special handling for hydrahd.ru
+  if (window.location.hostname.includes('hydrahd.ru')) {
     // Make sure we can manipulate the video
     video.setAttribute('controlsList', 'nodownload');
     
@@ -428,8 +428,8 @@ function handleVideoError(e) {
   const currentSrc = videoElement.src;
   const currentTime = videoElement.currentTime || 0;
   
-  // Special handling for cineby.sc
-  if (window.location.hostname.includes('cineby.sc')) {
+  // Special handling for hydrahd.ru
+  if (window.location.hostname.includes('hydrahd.ru')) {
     // For Cineby, try a more aggressive recovery approach
     
     // First, check if it's just a missing source or corruption
