@@ -41,7 +41,7 @@ function enhanceContentItems() {
     if (window.location.hostname.includes('hydrahd.ru')) {
       const anchor = item.tagName === 'A' ? item : item.querySelector('a');
       if (anchor && anchor.href && anchor.href.includes('/movie/')) {
-        // Add a special click handler for Cineby movie links
+        // Add a special click handler for HydraHD movie links
         item.addEventListener('click', (e) => {
           // Make sure the link loads correctly without going to a black screen
           e.preventDefault();
@@ -63,7 +63,7 @@ function enhanceContentItems() {
         });
       }
     } else {
-      // Standard handling for non-Cineby sites
+      // Standard handling for non-target sites
       if (item.tagName !== 'A' && !item.onclick) {
         item.addEventListener('click', () => {
           // If there's an anchor inside, click it
@@ -87,7 +87,7 @@ function enhanceContentItems() {
   
   // For hydrahd.ru, detect and enhance play buttons specifically
   if (window.location.hostname.includes('hydrahd.ru')) {
-    enhanceCinebyPlayButtons();
+    enhanceHydrahdPlayButtons();
   }
 }
 
@@ -328,7 +328,7 @@ function showSearchToast() {
 /**
  * Enhance video player with better controls specifically for hydrahd.ru
  */
-function enhanceCinebyVideoPlayer() {
+function enhanceHydrahdVideoPlayer() {
   // Only run on movie pages
   if (!window.location.pathname.includes('/movie/')) return;
   
@@ -505,7 +505,7 @@ function showVideoInfoToast(message) {
 /**
  * Enhance play buttons specifically for hydrahd.ru
  */
-function enhanceCinebyPlayButtons() {
+function enhanceHydrahdPlayButtons() {
   // Only run on movie info pages
   if (!window.location.pathname.includes('/movie/')) return;
   
@@ -564,7 +564,7 @@ function enhanceCinebyPlayButtons() {
         
         // We need to let the original click go through, but prepare
         // for the video to appear and be enhanced
-        setupCinebyVideoMonitor();
+        setupHydrahdVideoMonitor();
         
         // Allow the default click to continue after a tiny delay
         setTimeout(() => {
@@ -596,7 +596,7 @@ function enhanceCinebyPlayButtons() {
  * Set up a video monitor specifically for hydrahd.ru
  * to ensure video plays correctly after clicking play
  */
-function setupCinebyVideoMonitor() {
+function setupHydrahdVideoMonitor() {
   // Keep track of the current movie page URL
   window.tflixLastMovieUrl = window.location.href;
   
@@ -678,12 +678,12 @@ function detectAndEnhanceContent() {
   enhanceNavigationMenus();
   enhanceVideoPlayer();
   enhanceSearchFunctionality();
-  enhanceCinebyVideoPlayer();
+enhanceHydrahdVideoPlayer();
   
   // Special handling for hydrahd.ru on movie info pages
   if (window.location.hostname.includes('hydrahd.ru') && 
       window.location.pathname.includes('/movie/')) {
-    enhanceCinebyPlayButtons();
+    enhanceHydrahdPlayButtons();
   }
 }
 

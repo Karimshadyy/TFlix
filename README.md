@@ -49,7 +49,7 @@ TFlix is a TizenBrew module that transforms [hydrahd.ru](https://www.hydrahd.ru/
 
 ### Project Structure
 
-- `mods/` - Contains the JavaScript modules for enhancing Cineby.gd
+- `mods/` - Contains the JavaScript modules for enhancing HydraHD.ru
 - `service/` - Contains the service code for handling TV functionality
 - `dist/` - Contains the built module files
 
@@ -69,4 +69,4 @@ MIT
 
 ---
 
-_TFlix is a community-created module for TizenBrew and is not officially affiliated with Cineby.gd._
+_TFlix is a community-created module for TizenBrew and is not officially affiliated with HydraHD.ru._

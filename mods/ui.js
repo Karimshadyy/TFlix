@@ -1,6 +1,11 @@
 /*global navigate*/
 import css from './ui.css';
 
+const TARGET_DOMAIN = 'hydrahd.ru';
+function isTargetSite() {
+  return window.location.hostname.includes(TARGET_DOMAIN);
+}
+
 let videoElement = null;
 let playerControls = null;
 let progressBar = null;
@@ -326,20 +331,20 @@ function fixVideoPlaybackIssues(video) {
   }
   
   // Special handling for hydrahd.ru
-  if (window.location.hostname.includes('hydrahd.ru')) {
+  if (isTargetSite()) {
     // Make sure we can manipulate the video
     video.setAttribute('controlsList', 'nodownload');
     
-    // Store a reference for our Cineby-specific handlers
+    // Store a reference for site-specific handlers
     window.tflixVideoElement = video;
     
     // Store the current movie page URL to use for back navigation
     window.tflixLastMovieUrl = window.location.href;
     
     // Add event listeners for TV remote navigation during playback
-    document.addEventListener('keydown', handleCinebyVideoKeyEvents);
+    document.addEventListener('keydown', handleTargetSiteVideoKeyEvents);
     
-    // Force a play attempt with retry logic for Cineby
+    // Force a play attempt with retry logic for the target site
     let playAttempts = 0;
     const tryPlayVideo = () => {
       video.play().catch(() => {
@@ -360,15 +365,15 @@ function fixVideoPlaybackIssues(video) {
 }
 
 /**
- * Handle Cineby-specific video remote events
+ * Handle hydrahd.ru-specific video remote events
  * @param {Event} e - Remote control event
  */
-function handleCinebyVideoKeyEvents(e) {
+function handleTargetSiteVideoKeyEvents(e) {
   const video = window.tflixVideoElement;
   if (!video) return;
   
   // Only process if we're on a video page and the video is visible
-  if (!window.location.pathname.includes('/movie/') || 
+  if (!isTargetSite() || !window.location.pathname.includes('/movie/') || 
       video.style.display === 'none' || 
       video.style.visibility === 'hidden') {
     return;
@@ -430,7 +435,7 @@ function handleVideoError(e) {
   
   // Special handling for hydrahd.ru
   if (window.location.hostname.includes('hydrahd.ru')) {
-    // For Cineby, try a more aggressive recovery approach
+    // For hydrahd.ru, try a more aggressive recovery approach
     
     // First, check if it's just a missing source or corruption
     if (!currentSrc || currentSrc === 'undefined' || currentSrc === '') {
