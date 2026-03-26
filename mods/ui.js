@@ -685,25 +685,32 @@ const ARROW_KEY_CODE = {
   'ArrowDown': 'down'
 };
 
-// Initialize UI when the page is loaded
-const interval = setInterval(() => {
-  if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    try {
-      initializeUI();
-    } catch (error) {
-      // Try again in case of error
-      setTimeout(initializeUI, 1000);
-    }
-    clearInterval(interval);
-  }
-}, 250);
-
 // Register for back button events at the system level if available
 if (typeof tizen !== 'undefined' && tizen.tvinputdevice) {
   try {
     tizen.tvinputdevice.registerKey('Back');
   } catch (e) {
     // Silent error handling
+  }
+}
+
+// Initialize UI when DOM is ready (single initialization)
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    try {
+      initializeUI();
+    } catch (error) {
+      console.error('Error initializing TFlix UI:', error);
+      // Try again after a delay
+      setTimeout(initializeUI, 1000);
+    }
+  });
+} else {
+  // DOM already loaded
+  try {
+    initializeUI();
+  } catch (error) {
+    console.error('Error initializing TFlix UI:', error);
   }
 }
 

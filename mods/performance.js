@@ -141,33 +141,36 @@ function optimizeScrolling() {
  * Set up event debouncing for better performance
  */
 function setupEventDebouncing() {
-  // Debounce scroll and resize events
-  let scrollTimeout;
-  let resizeTimeout;
-  
+  // Create a Map to track debounce timers per element and event type
+  const debounceTimers = new WeakMap();
   const originalAddEventListener = EventTarget.prototype.addEventListener;
   
-  EventTarget.prototype.addEventListener = function(type, listener, options) {
+  // Only debounce document scroll and window resize events to avoid breaking other listeners
+  document.addEventListener = function(type, listener, options) {
     if (type === 'scroll') {
+      let scrollTimeout;
       const debouncedListener = function(e) {
         clearTimeout(scrollTimeout);
         scrollTimeout = setTimeout(() => {
           listener.call(this, e);
         }, 100);
       };
-      
       return originalAddEventListener.call(this, type, debouncedListener, options);
-    } else if (type === 'resize') {
+    }
+    return originalAddEventListener.call(this, type, listener, options);
+  };
+  
+  window.addEventListener = function(type, listener, options) {
+    if (type === 'resize') {
+      let resizeTimeout;
       const debouncedListener = function(e) {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(() => {
           listener.call(this, e);
         }, 100);
       };
-      
       return originalAddEventListener.call(this, type, debouncedListener, options);
     }
-    
     return originalAddEventListener.call(this, type, listener, options);
   };
 }
@@ -176,16 +179,19 @@ function setupEventDebouncing() {
  * Set up memory management to prevent memory leaks
  */
 function setupMemoryManagement() {
-  // Clear unused objects periodically
+  // Clean up detached DOM nodes and event listeners periodically
   setInterval(() => {
-    // Force garbage collection (though we can't directly call it)
-    // This trick helps in some browsers
-    const arr = [];
-    for (let i = 0; i < 1000; i++) {
-      arr.push(new Array(10000).join('x'));
-    }
-    arr.length = 0;
-  }, 60000); // Every minute
+    // Remove event listeners from elements that might have been removed from DOM
+    const orphanedElements = document.querySelectorAll('[data-tflix-item], [data-tflix-nav-item]');
+    orphanedElements.forEach(el => {
+      if (!document.body.contains(el)) {
+        // Element is no longer in the DOM, consider removing references
+        if (el._listeners) {
+          delete el._listeners;
+        }
+      }
+    });
+  }, 30000); // Every 30 seconds
 }
 
 // Export the initialization function
